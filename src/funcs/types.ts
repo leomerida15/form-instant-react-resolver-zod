@@ -1,5 +1,6 @@
-import { z } from "zod";
-export type ZodObjectOrWrapped = z.ZodObject<any, any> | z.ZodEffects<z.ZodObject<any, any>>;
+import { ZodEffects, ZodObject } from "zod";
+
+export type ZodObjectOrWrapped = ZodObject<any, any> | ZodEffects<ZodObject<any, any>>;
 
 export interface ParsedField<AdditionalRenderable, FieldTypes = string> {
     key: string;
@@ -27,6 +28,6 @@ export type Renderable<AdditionalRenderable = null> =
     | undefined
     | AdditionalRenderable;
 
-export type FieldConfig<AdditionalRenderable = {}, FieldTypes = string> = {
+export type FieldConfig<AdditionalRenderable = object, FieldTypes = string> = {
     fieldType?: FieldTypes;
 } & AdditionalRenderable;
