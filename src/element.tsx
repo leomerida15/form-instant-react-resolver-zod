@@ -1,28 +1,30 @@
-import { useId } from "react";
-import { useInputMapping } from "../../InputMapping/useInputMapping";
-import { useFields } from "./useSchema";
+import { useInputMapping } from '@form-instant/react-input-mapping';
+import { useId } from 'react';
+import { useFields } from './useSchema';
 
 interface ElementProps<Schema extends Record<string, any>> {
-    name: keyof Schema;
+  name: keyof Schema;
 }
 
-export const Element = <S extends Record<string, any>>({ name }: ElementProps<S>) => {
-    const inputMapping = useInputMapping();
-    const field = useFields(name);
+export const Element = <S extends Record<string, any>>({
+  name,
+}: ElementProps<S>) => {
+  const inputMapping = useInputMapping();
+  const field = useFields(name);
 
-    const inputs = Object.values(field.schema!);
+  const inputs = Object.values(field.schema!);
 
-    const id = useId();
+  const id = useId();
 
-    return (
-        <>
-            {inputs.map((props) => {
-                const Element = inputMapping.get(props.type)!;
+  return (
+    <>
+      {inputs.map((props) => {
+        const Element = inputMapping.get(props.type)!;
 
-                const { key, ...prop } = props;
+        const { key, ...prop } = props;
 
-                return <Element {...prop} key={`${key}-${id}`} />;
-            })}
-        </>
-    );
+        return <Element {...prop} key={`${key}-${id}`} />;
+      })}
+    </>
+  );
 };

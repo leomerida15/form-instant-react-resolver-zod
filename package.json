@@ -59,6 +59,7 @@
     }
   ],
   "dependencies": {
+    "@form-instant/react-input-mapping": "^0.0.0-alpha",
     "use-context-selector": "^2.0.0"
   },
   "devDependencies": {
@@ -72,6 +73,7 @@
     "prettier": "^3.3.3",
     "size-limit": "^11.1.4",
     "tslib": "^2.7.0",
-    "typescript": "^5.5.4"
+    "typescript": "^5.5.4",
+    "zod": "^3.23.8"
   }
 }
