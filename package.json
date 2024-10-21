@@ -1,8 +1,12 @@
 {
   "name": "@form-instant/react-input-mapping",
-  "version": "0.1.0",
+  "version": "0.0.0-alpha",
   "license": "MIT",
-  "author": "leomerida15",
+  "author": {
+    "name": "leomerida15",
+    "email": "dimasmerida15@gmail.com",
+    "url": "https://github.com/leomerida15"
+  },
   "main": "dist/index.js",
   "module": "dist/react-input-mapping.esm.js",
   "typings": "dist/index.d.ts",
@@ -10,7 +14,7 @@
     "dist",
     "src"
   ],
-  "private": true,
+  "private": false,
   "exports": {
     ".": "./src/index.ts"
   },
@@ -21,7 +25,8 @@
     "prepare": "dts build",
     "size": "size-limit",
     "start": "dts watch",
-    "test": "dts test --passWithNoTests"
+    "test": "dts test --passWithNoTests",
+    "Up": "npm publish --access public"
   },
   "husky": {
     "hooks": {
