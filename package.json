@@ -43,7 +43,7 @@
     "testEnvironment": "jsdom"
   },
   "peerDependencies": {
-    "react": ">=16"
+    "react": "^18.3.1"
   },
   "engines": {
     "node": ">=12"
@@ -63,18 +63,20 @@
     "use-context-selector": "^2.0.0"
   },
   "devDependencies": {
-    "@size-limit/preset-small-lib": "^11.1.4",
+    "@size-limit/preset-small-lib": "^11.1.6",
     "@tsconfig/recommended": "^1.0.7",
     "@tsconfig/vite-react": "^3.0.2",
-    "@types/bun": "^1.1.8",
+    "@types/bun": "^1.1.11",
     "@types/react": "^18.3.11",
     "dts-cli": "^2.0.5",
-    "husky": "^9.1.5",
-    "nodemon": "^3.1.4",
+    "eslint": "^9.13.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "husky": "^9.1.6",
+    "nodemon": "^3.1.7",
     "prettier": "^3.3.3",
-    "size-limit": "^11.1.4",
-    "tslib": "^2.7.0",
-    "typescript": "^5.5.4",
+    "size-limit": "^11.1.6",
+    "tslib": "^2.8.0",
+    "typescript": "~5.0.4",
     "zod": "^3.23.8"
   }
 }
