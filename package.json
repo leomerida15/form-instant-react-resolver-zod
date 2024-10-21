@@ -67,6 +67,7 @@
     "@tsconfig/recommended": "^1.0.7",
     "@tsconfig/vite-react": "^3.0.2",
     "@types/bun": "^1.1.8",
+    "@types/react": "^18.3.11",
     "dts-cli": "^2.0.5",
     "husky": "^9.1.5",
     "nodemon": "^3.1.4",
