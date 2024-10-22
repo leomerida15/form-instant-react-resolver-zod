@@ -6,7 +6,7 @@ export interface ElementProps<Schema extends Record<string, any>> {
     name: keyof Schema;
 }
 
-export const Element = <S extends Record<string, any>>({ name }: ElementProps<S>) => {
+export const FormInstantElement = <S extends Record<string, any>>({ name }: ElementProps<S>) => {
     const InputMapping = useInputMapping();
     const field = useFields(name);
 
