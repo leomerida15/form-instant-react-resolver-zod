@@ -2,18 +2,18 @@ import { RefinementEffect, z } from "zod";
 import { FieldConfig, SuperRefineFunction } from "./types";
 export const FIELD_CONFIG_SYMBOL = Symbol("GetFieldConfig");
 
-export function fieldConfig<AdditionalRenderable = null, FieldTypes = string>(
-    config: FieldConfig<AdditionalRenderable, FieldTypes>,
-): SuperRefineFunction {
-    const refinementFunction: SuperRefineFunction = () => {
-        // Do nothing.
+export const createZodSchemaFieldConfig =
+    <AdditionalRenderable = null, FieldTypes = string>() =>
+    (config: FieldConfig<AdditionalRenderable, FieldTypes>): SuperRefineFunction => {
+        const refinementFunction: SuperRefineFunction = () => {
+            // Do nothing.
+        };
+
+        // @ts-expect-error This is a symbol and not a real value.
+        refinementFunction[FIELD_CONFIG_SYMBOL] = config;
+
+        return refinementFunction;
     };
-
-    // @ts-expect-error This is a symbol and not a real value.
-    refinementFunction[FIELD_CONFIG_SYMBOL] = config;
-
-    return refinementFunction;
-}
 
 export function getFieldConfigInZodStack(schema: z.ZodTypeAny): FieldConfig {
     const typedSchema = schema as unknown as z.ZodEffects<z.ZodNumber | z.ZodString>;
