@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext } from "use-context-selector";
 import { ZodEffects, ZodObject } from "zod";
 import { ZodResolverContext } from "./context";
 import { parseSchema } from "./funcs/schema-parser";
