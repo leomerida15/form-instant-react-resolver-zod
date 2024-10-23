@@ -78,7 +78,7 @@
     "homepage": "https://leomerida15.github.io/form-instant-react-mapping",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/leomerida15/form-instant-react-mapping.git"
+        "url": "git+https://github.com/leomerida15/form-instant-react-resolver-zod.git"
     },
     "keywords": [
         "@form-instant",
