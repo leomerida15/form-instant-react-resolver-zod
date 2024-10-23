@@ -53,7 +53,7 @@
         }
     ],
     "dependencies": {
-        "@form-instant/react-input-mapping": "^0.0.0-alpha",
+        "@form-instant/react-input-mapping": "workspace:*",
         "use-context-selector": "^2.0.0"
     },
     "devDependencies": {
