@@ -1,8 +1,8 @@
-import { z } from "zod";
-import { getDefaultValueInZodStack } from "./default-values";
-import { getFieldConfigInZodStack } from "./field-config";
-import { inferFieldType } from "./field-type-inference";
-import { ParsedField, ParsedSchema, ZodObjectOrWrapped } from "./types";
+import { z } from 'zod';
+import { getDefaultValueInZodStack } from './default-values';
+import { getFieldConfigInZodStack } from './field-config';
+import { inferFieldType } from './field-type-inference';
+import { ParsedField, ParsedSchema, ZodObjectOrWrapped } from './types';
 
 function parseField(key: string, schema: z.ZodTypeAny): ParsedField<any> {
     const baseSchema = getBaseSchema(schema);
@@ -29,7 +29,7 @@ function parseField(key: string, schema: z.ZodTypeAny): ParsedField<any> {
         );
     }
     if (baseSchema instanceof z.ZodArray) {
-        subSchema = [parseField("0", baseSchema._def.type)];
+        subSchema = [parseField('0', baseSchema._def.type)];
     }
 
     const resp = {
@@ -49,10 +49,10 @@ function parseField(key: string, schema: z.ZodTypeAny): ParsedField<any> {
 function getBaseSchema<ChildType extends z.ZodAny | z.ZodTypeAny | z.AnyZodObject = z.ZodAny>(
     schema: ChildType | z.ZodEffects<ChildType>,
 ): ChildType {
-    if ("innerType" in schema._def) {
+    if ('innerType' in schema._def) {
         return getBaseSchema(schema._def.innerType as ChildType);
     }
-    if ("schema" in schema._def) {
+    if ('schema' in schema._def) {
         return getBaseSchema(schema._def.schema as ChildType);
     }
 

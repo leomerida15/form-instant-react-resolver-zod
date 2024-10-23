@@ -1,4 +1,4 @@
-import { ZodDiscriminatedUnion, ZodEffects, ZodObject } from "zod";
+import { ZodDiscriminatedUnion, ZodEffects, ZodObject } from 'zod';
 
 export type zodResolverProps =
     | ZodObject<any, any>

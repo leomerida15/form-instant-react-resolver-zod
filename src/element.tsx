@@ -1,6 +1,6 @@
-import { useInputMapping } from "@form-instant/react-input-mapping";
-import { createElement, useId } from "react";
-import { useFields } from "./useSchema";
+import { useInputMapping } from '@form-instant/react-input-mapping';
+import { createElement, useId } from 'react';
+import { useFields } from './useSchema';
 
 export interface ElementProps<Schema extends Record<string, any>> {
     name: keyof Schema;

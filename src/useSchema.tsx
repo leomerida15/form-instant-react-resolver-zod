@@ -1,7 +1,7 @@
-import { useContext } from "use-context-selector";
-import { ZodEffects, ZodObject } from "zod";
-import { ZodResolverContext } from "./context";
-import { parseSchema } from "./funcs/schema-parser";
+import { useContext } from 'use-context-selector';
+import { ZodEffects, ZodObject } from 'zod';
+import { ZodResolverContext } from './context';
+import { parseSchema } from './funcs/schema-parser';
 
 export const useSchema = () =>
     useContext(ZodResolverContext) as ZodObject<never, never> | ZodEffects<never, never>;

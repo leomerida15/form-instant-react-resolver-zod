@@ -1,7 +1,7 @@
-import { z } from "zod";
-import { FieldConfig } from "./types";
+import { z } from 'zod';
+import { FieldConfig } from './types';
 
-export function inferFieldType(schema: z.ZodTypeAny, fieldType?: FieldConfig["fieldType"]): string {
+export function inferFieldType(schema: z.ZodTypeAny, fieldType?: FieldConfig['fieldType']): string {
     if (fieldType) {
         return fieldType;
     }
@@ -9,17 +9,17 @@ export function inferFieldType(schema: z.ZodTypeAny, fieldType?: FieldConfig["fi
     const type = schema._def.typeName;
 
     const zodToInputType = new Map([
-        ["ZodObject", "object"],
-        ["ZodString", "string"],
-        ["ZodNumber", "number"],
-        ["ZodBoolean", "boolean"],
-        ["ZodDate", "date"],
-        ["ZodEnum", "select"],
-        ["ZodNativeEnum", "select"],
-        ["ZodArray", "array"],
+        ['ZodObject', 'object'],
+        ['ZodString', 'string'],
+        ['ZodNumber', 'number'],
+        ['ZodBoolean', 'boolean'],
+        ['ZodDate', 'date'],
+        ['ZodEnum', 'select'],
+        ['ZodNativeEnum', 'select'],
+        ['ZodArray', 'array'],
     ]);
 
     const match = zodToInputType.get(type);
 
-    return match || "string"; // Default to string for unknown types
+    return match || 'string'; // Default to string for unknown types
 }

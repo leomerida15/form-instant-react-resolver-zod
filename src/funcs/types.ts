@@ -1,4 +1,4 @@
-import { ZodEffects, ZodObject } from "zod";
+import { ZodEffects, ZodObject } from 'zod';
 
 export type ZodObjectOrWrapped = ZodObject<any, any> | ZodEffects<ZodObject<any, any>>;
 

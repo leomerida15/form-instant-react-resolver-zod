@@ -1,6 +1,6 @@
-import { RefinementEffect, z } from "zod";
-import { FieldConfig, SuperRefineFunction } from "./types";
-export const FIELD_CONFIG_SYMBOL = Symbol("GetFieldConfig");
+import { RefinementEffect, z } from 'zod';
+import { FieldConfig, SuperRefineFunction } from './types';
+export const FIELD_CONFIG_SYMBOL = Symbol('GetFieldConfig');
 
 export const createZodSchemaFieldConfig =
     <AdditionalRenderable = null, FieldTypes = string>() =>
@@ -18,7 +18,7 @@ export const createZodSchemaFieldConfig =
 export function getFieldConfigInZodStack(schema: z.ZodTypeAny): FieldConfig {
     const typedSchema = schema as unknown as z.ZodEffects<z.ZodNumber | z.ZodString>;
 
-    if (typedSchema._def.typeName === "ZodEffects") {
+    if (typedSchema._def.typeName === 'ZodEffects') {
         const effect = typedSchema._def.effect as RefinementEffect<any>;
         const refinementFunction = effect.refinement;
 
@@ -27,10 +27,10 @@ export function getFieldConfigInZodStack(schema: z.ZodTypeAny): FieldConfig {
         }
     }
 
-    if ("innerType" in typedSchema._def) {
+    if ('innerType' in typedSchema._def) {
         return getFieldConfigInZodStack(typedSchema._def.innerType as unknown as z.ZodAny);
     }
-    if ("schema" in typedSchema._def) {
+    if ('schema' in typedSchema._def) {
         return getFieldConfigInZodStack((typedSchema._def as any).schema as z.ZodAny);
     }
 

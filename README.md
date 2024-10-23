@@ -26,7 +26,7 @@ npm i # or yarn to install dependencies
 npm start # or yarn start
 ```
 
-The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure DTS is running in watch mode like we recommend above. 
+The default example imports and live reloads whatever is in `/dist`, so if you are seeing an out of date component, make sure DTS is running in watch mode like we recommend above.
 
 To do a one-off build, use `npm run build` or `yarn build`.
 
@@ -82,8 +82,8 @@ DTS uses [Rollup](https://rollupjs.org) as a bundler and generates multiple roll
 
 Two actions are added by default:
 
-- `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
-- `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
+-   `main` which installs deps w/ cache, lints, tests, and builds on all pushes against a Node and OS matrix
+-   `size` which comments cost comparison of your library on every pull request using [`size-limit`](https://github.com/ai/size-limit)
 
 ## Optimizations
 

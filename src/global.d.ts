@@ -1,4 +1,4 @@
-import { FC as FCN, ReactNode } from "react";
+import { FC as FCN, ReactNode } from 'react';
 
 declare global {
     type FCCP<P extends object = object> = P & {
