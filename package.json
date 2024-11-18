@@ -1,6 +1,6 @@
 {
     "name": "@form-instant/react-resolver-zod",
-    "version": "0.2.0",
+    "version": "0.2.2",
     "license": "MIT",
     "author": {
         "name": "leomerida15",
@@ -57,8 +57,8 @@
         "@tsconfig/vite-react": "^3.0.2",
         "@types/bun": "^1.1.13",
         "@types/react": "^18.3.12",
-        "@typescript-eslint/eslint-plugin": "^8.14.0",
-        "@typescript-eslint/parser": "^8.14.0",
+        "@typescript-eslint/eslint-plugin": "^8.15.0",
+        "@typescript-eslint/parser": "^8.15.0",
         "dts-cli": "^2.0.5",
         "eslint": "^9.15.0",
         "eslint-plugin-prettier": "^5.2.1",
