@@ -1,5 +1,5 @@
 import { ElementMapping } from '@form-instant/react-input-mapping';
-import { useId } from 'react';
+import { Fragment, useId } from 'react';
 import { useFields } from './useSchema';
 
 export interface ElementProps<Schema extends Record<string, any>> {
@@ -16,7 +16,11 @@ export const FormInstantElement = <S extends Record<string, any>>({ name }: Elem
     return (
         <>
             {inputs.map((props) => {
-                return <ElementMapping formProps={props} key={`${id}-${props.key}`} />;
+                return (
+                    <Fragment key={`${id}-${props.name.history}`}>
+                        <ElementMapping formProps={props} />
+                    </Fragment>
+                );
             })}
         </>
     );

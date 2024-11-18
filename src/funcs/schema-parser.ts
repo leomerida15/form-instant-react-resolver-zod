@@ -1,10 +1,11 @@
+import { ParsedField } from '@form-instant/react-input-mapping';
 import { z } from 'zod';
 import { getDefaultValueInZodStack } from './default-values';
 import { getFieldConfigInZodStack } from './field-config';
 import { inferFieldType } from './field-type-inference';
-import { ParsedField, ParsedSchema, ZodObjectOrWrapped } from './types';
+import { ParsedSchema, ZodObjectOrWrapped } from './types';
 
-function parseField(key: string, schema: z.ZodTypeAny): ParsedField<any> {
+function parseField(name: string, schema: z.ZodTypeAny, history: string = ''): ParsedField<any> {
     const baseSchema = getBaseSchema(schema);
     const { fieldType, ...fieldConfig } = getFieldConfigInZodStack(schema);
     const type = inferFieldType(baseSchema, fieldType);
@@ -25,7 +26,7 @@ function parseField(key: string, schema: z.ZodTypeAny): ParsedField<any> {
     let subSchema: ParsedField<any>[] = [];
     if (baseSchema._def.typeName === 'ZodObject') {
         subSchema = Object.entries((baseSchema as any).shape).map(([key, field]) =>
-            parseField(key, field as z.ZodTypeAny),
+            parseField(key, field as z.ZodTypeAny, [history, name].join('.')),
         );
     }
     if (baseSchema._def.typeName === 'ZodArray') {
@@ -33,7 +34,7 @@ function parseField(key: string, schema: z.ZodTypeAny): ParsedField<any> {
     }
 
     const resp = {
-        key,
+        name: { current: name, history: [history, name].join('.') },
         type,
         required: !schema.isOptional(),
         default: defaultValue,
