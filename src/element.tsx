@@ -16,7 +16,7 @@ export const FormInstantElement = <S extends Record<string, any>>({ name }: Elem
     return (
         <>
             {inputs.map((props) => {
-                return <ElementMapping {...props} key={`${id}-${props.key}`} />;
+                return <ElementMapping formProps={props} key={`${id}-${props.key}`} />;
             })}
         </>
     );

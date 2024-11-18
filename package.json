@@ -1,6 +1,6 @@
 {
     "name": "@form-instant/react-resolver-zod",
-    "version": "0.1.7",
+    "version": "0.2.0",
     "license": "MIT",
     "author": {
         "name": "leomerida15",
@@ -11,13 +11,8 @@
     "module": "dist/react-input-mapping.esm.js",
     "typings": "dist/index.d.ts",
     "files": [
-        "dist",
-        "src"
+        "dist"
     ],
-    "private": false,
-    "exports": {
-        ".": "./src/index.ts"
-    },
     "scripts": {
         "analyze": "size-limit --why",
         "build": "dts build",
@@ -37,6 +32,7 @@
         "testEnvironment": "jsdom"
     },
     "peerDependencies": {
+        "@form-instant/react-input-mapping": "^0.2.0",
         "react": "^18.3.1"
     },
     "engines": {
@@ -53,25 +49,24 @@
         }
     ],
     "dependencies": {
-        "@form-instant/react-input-mapping": "^0.1.9",
         "use-context-selector": "^2.0.0"
     },
     "devDependencies": {
         "@size-limit/preset-small-lib": "^11.1.6",
-        "@tsconfig/recommended": "^1.0.7",
+        "@tsconfig/recommended": "^1.0.8",
         "@tsconfig/vite-react": "^3.0.2",
-        "@types/bun": "^1.1.12",
+        "@types/bun": "^1.1.13",
         "@types/react": "^18.3.12",
-        "@typescript-eslint/eslint-plugin": "^8.11.0",
-        "@typescript-eslint/parser": "^8.11.0",
+        "@typescript-eslint/eslint-plugin": "^8.14.0",
+        "@typescript-eslint/parser": "^8.14.0",
         "dts-cli": "^2.0.5",
-        "eslint": "^9.13.0",
+        "eslint": "^9.15.0",
         "eslint-plugin-prettier": "^5.2.1",
-        "husky": "^9.1.6",
+        "husky": "^9.1.7",
         "nodemon": "^3.1.7",
         "prettier": "^3.3.3",
         "size-limit": "^11.1.6",
-        "tslib": "^2.8.0",
+        "tslib": "^2.8.1",
         "typescript": "~5.0.4",
         "zod": "^3.23.8"
     },

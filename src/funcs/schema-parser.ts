@@ -23,12 +23,12 @@ function parseField(key: string, schema: z.ZodTypeAny): ParsedField<any> {
 
     // Arrays and objects
     let subSchema: ParsedField<any>[] = [];
-    if (baseSchema instanceof z.ZodObject) {
-        subSchema = Object.entries(baseSchema.shape).map(([key, field]) =>
+    if (baseSchema._def.typeName === 'ZodObject') {
+        subSchema = Object.entries((baseSchema as any).shape).map(([key, field]) =>
             parseField(key, field as z.ZodTypeAny),
         );
     }
-    if (baseSchema instanceof z.ZodArray) {
+    if (baseSchema._def.typeName === 'ZodArray') {
         subSchema = [parseField('0', baseSchema._def.type)];
     }
 
