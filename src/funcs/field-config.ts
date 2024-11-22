@@ -1,6 +1,25 @@
-import { RefinementEffect, z } from 'zod';
+import { z } from 'zod';
 import { FieldConfig, SuperRefineFunction } from './types';
 export const FIELD_CONFIG_SYMBOL = Symbol('GetFieldConfig');
+
+declare module 'zod' {
+    interface ZodType<Output = any, Def = any, Input = Output> {
+        fieldConfig<AdditionalRenderable = null, FieldTypes = string>(
+            config: FieldConfig<AdditionalRenderable, FieldTypes>,
+        ): this;
+    }
+}
+
+export const extendZodWithFieldConfig = <AdditionalRenderable = null, FieldTypes = string>(
+    zod: typeof z,
+) => {
+    (zod.ZodType.prototype as any).fieldConfig = function (
+        config: FieldConfig<AdditionalRenderable, FieldTypes>,
+    ) {
+        this._def.fieldConfig = config;
+        return this;
+    };
+};
 
 export const createZodSchemaFieldConfig =
     <AdditionalRenderable = null, FieldTypes = string>() =>
@@ -16,23 +35,21 @@ export const createZodSchemaFieldConfig =
     };
 
 export function getFieldConfigInZodStack(schema: z.ZodTypeAny): FieldConfig {
-    const typedSchema = schema as unknown as z.ZodEffects<z.ZodNumber | z.ZodString>;
-
-    if (typedSchema._def.typeName === 'ZodEffects') {
-        const effect = typedSchema._def.effect as RefinementEffect<any>;
-        const refinementFunction = effect.refinement;
-
-        if (FIELD_CONFIG_SYMBOL in refinementFunction) {
-            return refinementFunction[FIELD_CONFIG_SYMBOL] as FieldConfig;
-        }
+    // Verifica si el esquema tiene fieldConfig directamente
+    if (schema._def.fieldConfig) {
+        return schema._def.fieldConfig as FieldConfig;
     }
 
-    if ('innerType' in typedSchema._def) {
-        return getFieldConfigInZodStack(typedSchema._def.innerType as unknown as z.ZodAny);
-    }
-    if ('schema' in typedSchema._def) {
-        return getFieldConfigInZodStack((typedSchema._def as any).schema as z.ZodAny);
+    // Si el esquema es un ZodEffects, busca en el innerType
+    if ('innerType' in schema._def) {
+        return getFieldConfigInZodStack(schema._def.innerType as z.ZodAny);
     }
 
-    return {};
+    // Si el esquema es un ZodEffects con un schema interno, busca en el schema
+    if ('schema' in schema._def) {
+        return getFieldConfigInZodStack(schema._def.schema as z.ZodAny);
+    }
+
+    // Si no se encuentra fieldConfig, retorna un objeto vacío
+    return {} as FieldConfig;
 }
