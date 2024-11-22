@@ -77,9 +77,11 @@ function parseField(
     dependecys: Record<string, any> = {},
 ): ParsedField<any> {
     const baseSchema = getBaseSchema(schema);
-    const { fieldType, ...fieldConfig } = getFieldConfigInZodStack(schema);
+    const { fieldType, ...fieldConfigBase } = getFieldConfigInZodStack(schema);
     const type = inferFieldType(baseSchema, fieldType);
     const defaultValue = getDefaultValueInZodStack(schema);
+
+    let fieldConfig = fieldConfigBase;
 
     // Enums
     const options = baseSchema._def.values;
