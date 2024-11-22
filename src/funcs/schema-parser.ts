@@ -77,7 +77,7 @@ function parseField(
     dependecys: Record<string, any> = {},
 ): ParsedField<any> {
     const baseSchema = getBaseSchema(schema);
-    let { fieldType, ...fieldConfig } = getFieldConfigInZodStack(schema);
+    const { fieldType, ...fieldConfig } = getFieldConfigInZodStack(schema);
     const type = inferFieldType(baseSchema, fieldType);
     const defaultValue = getDefaultValueInZodStack(schema);
 

@@ -3,8 +3,7 @@ import { FieldConfig, SuperRefineFunction } from './types';
 export const FIELD_CONFIG_SYMBOL = Symbol('GetFieldConfig');
 
 declare module 'zod' {
-    // @ts-expect-error
-    interface ZodType<Output = any, Def = any, Input = Output> {
+    interface ZodType {
         fieldConfig<AdditionalRenderable = null, FieldTypes = string>(
             config: FieldConfig<AdditionalRenderable, FieldTypes>,
         ): this;
