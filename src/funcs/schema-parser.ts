@@ -116,14 +116,10 @@ function parseField({ name, schema, history, dependecys = {} }: typeMapping): Pa
         };
     }
 
-    const historyFormat = history ? [history] : [];
-
-    historyFormat.push(name);
-
     const resp = {
         name: {
             current: name,
-            history: historyFormat.join('.'),
+            history: [history, name].filter(Boolean).join('.'),
         },
         type,
         required: !schema.isOptional(),
