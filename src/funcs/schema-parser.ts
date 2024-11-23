@@ -5,7 +5,7 @@ import { getFieldConfigInZodStack } from './field-config';
 import { inferFieldType } from './field-type-inference';
 import { ParsedSchema, ZodObjectOrWrapped } from './types';
 
-interface typeMapping {
+interface typeMappingProps {
     schema: z.ZodTypeAny;
     name: string;
     history?: string;
@@ -14,7 +14,7 @@ interface typeMapping {
 
 type typeMappingType = Record<
     'ZodDiscriminatedUnion' | 'ZodObject' | 'ZodArray',
-    (p: typeMapping) => ParsedField<any, string>[]
+    (p: typeMappingProps) => ParsedField<any, string>[]
 >;
 
 const typeMapping: typeMappingType = {
@@ -33,18 +33,27 @@ const typeMapping: typeMappingType = {
         const fields = entries
             .filter(([key]) => key !== discriminator)
             .map(([key, field]) => {
+                let historyFormat = (history ? [history, name] : [name]).join('.');
+
+                if (historyFormat.charAt(0) === '.') historyFormat = historyFormat.substring(1);
                 return parseField({
                     name: key,
                     schema: field as z.ZodTypeAny,
-                    history: [history, name].join('.'),
+                    history: historyFormat,
                     dependecys,
                 });
             });
 
+        let historyFormat = (history ? [history, name, discriminator] : [name, discriminator]).join(
+            '.',
+        );
+
+        if (historyFormat.charAt(0) === '.') historyFormat = historyFormat.substring(1);
+
         fields.unshift({
             name: {
                 current: discriminator,
-                history: [history, name, discriminator].join('.'),
+                history: historyFormat,
             },
             type: 'discriminator',
             required: true,
@@ -57,29 +66,40 @@ const typeMapping: typeMappingType = {
     },
 
     ZodObject({ schema, name, history, dependecys }) {
+        let historyFormat = (history ? [history, name] : [name]).join('.');
+
+        if (historyFormat.charAt(0) === '.') historyFormat = historyFormat.substring(1);
         return Object.entries((schema as any).shape).map(([key, field]) =>
             parseField({
                 name: key,
                 schema: field as z.ZodTypeAny,
-                history: [history, name].join('.'),
+                history: historyFormat,
                 dependecys,
             }),
         );
     },
 
     ZodArray({ schema, name, history, dependecys }) {
+        let historyFormat = (history ? [history, name] : [name]).join('.');
+
+        if (historyFormat.charAt(0) === '.') historyFormat = historyFormat.substring(1);
         return [
             parseField({
                 name: '0',
                 schema: schema._def.type,
-                history: [history, name].join('.'),
+                history: historyFormat,
                 dependecys,
             }),
         ];
     },
 };
 
-function parseField({ name, schema, history, dependecys = {} }: typeMapping): ParsedField<any> {
+function parseField({
+    name,
+    schema,
+    history,
+    dependecys = {},
+}: typeMappingProps): ParsedField<any> {
     const baseSchema = getBaseSchema(schema);
     const { fieldType, ...fieldConfigBase } = getFieldConfigInZodStack(schema);
     const type = inferFieldType(baseSchema, fieldType);
@@ -116,10 +136,14 @@ function parseField({ name, schema, history, dependecys = {} }: typeMapping): Pa
         };
     }
 
+    let historyFormat = (history ? [history, name] : [name]).join('.');
+
+    if (historyFormat.charAt(0) === '.') historyFormat = historyFormat.substring(1);
+
     const resp = {
         name: {
             current: name,
-            history: [history, name].filter(Boolean).join('.'),
+            history: historyFormat,
         },
         type,
         required: !schema.isOptional(),

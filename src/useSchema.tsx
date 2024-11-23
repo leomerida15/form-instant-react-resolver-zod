@@ -23,7 +23,7 @@ type Data =
 type DP = Record<string, any>;
 
 export const useSchema = (cbP: (dp: DP, preData?: Data) => Data, dp: DP) => {
-    const schema = useMemo(() => cbP(dp).fieldConfig(dp), [dp]);
+    const schema = useMemo(() => cbP(dp).fieldConfig(dp), [cbP, dp]);
 
     return { schema };
 };
