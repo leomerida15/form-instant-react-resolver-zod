@@ -5,14 +5,21 @@ import { getFieldConfigInZodStack } from './field-config';
 import { inferFieldType } from './field-type-inference';
 import { ParsedSchema, ZodObjectOrWrapped } from './types';
 
-const typeMapping = {
-    ZodDiscriminatedUnion(
-        baseSchema: z.ZodTypeAny,
-        name: string,
-        history: string,
-        dependecys: Record<string, any>,
-    ) {
-        const { optionsMap, discriminator, fieldConfig } = baseSchema._def;
+interface typeMapping {
+    schema: z.ZodTypeAny;
+    name: string;
+    history?: string;
+    dependecys: Record<string, any>;
+}
+
+type typeMappingType = Record<
+    'ZodDiscriminatedUnion' | 'ZodObject' | 'ZodArray',
+    (p: typeMapping) => ParsedField<any, string>[]
+>;
+
+const typeMapping: typeMappingType = {
+    ZodDiscriminatedUnion({ schema, name, history, dependecys }) {
+        const { optionsMap, discriminator, fieldConfig } = schema._def;
 
         if (!Object.keys(dependecys).length) return [{}] as ParsedField<any, string>[];
 
@@ -26,12 +33,12 @@ const typeMapping = {
         const fields = entries
             .filter(([key]) => key !== discriminator)
             .map(([key, field]) => {
-                return parseField(
-                    key,
-                    field as z.ZodTypeAny,
-                    [history, name].join('.'),
+                return parseField({
+                    name: key,
+                    schema: field as z.ZodTypeAny,
+                    history: [history, name].join('.'),
                     dependecys,
-                );
+                });
             });
 
         fields.unshift({
@@ -49,33 +56,30 @@ const typeMapping = {
         return fields;
     },
 
-    ZodObject(
-        baseSchema: z.ZodTypeAny,
-        name: string,
-        history: string,
-        dependecys: Record<string, any>,
-    ) {
-        return Object.entries((baseSchema as any).shape).map(([key, field]) =>
-            parseField(key, field as z.ZodTypeAny, [history, name].join('.'), dependecys),
+    ZodObject({ schema, name, history, dependecys }) {
+        return Object.entries((schema as any).shape).map(([key, field]) =>
+            parseField({
+                name: key,
+                schema: field as z.ZodTypeAny,
+                history: [history, name].join('.'),
+                dependecys,
+            }),
         );
     },
 
-    ZodArray(
-        baseSchema: z.ZodTypeAny,
-        name: string,
-        history: string,
-        dependecys: Record<string, any>,
-    ) {
-        return [parseField('0', baseSchema._def.type, [history, name].join('.'), dependecys)];
+    ZodArray({ schema, name, history, dependecys }) {
+        return [
+            parseField({
+                name: '0',
+                schema: schema._def.type,
+                history: [history, name].join('.'),
+                dependecys,
+            }),
+        ];
     },
 };
 
-function parseField(
-    name: string,
-    schema: z.ZodTypeAny,
-    history: string = '',
-    dependecys: Record<string, any> = {},
-): ParsedField<any> {
+function parseField({ name, schema, history, dependecys = {} }: typeMapping): ParsedField<any> {
     const baseSchema = getBaseSchema(schema);
     const { fieldType, ...fieldConfigBase } = getFieldConfigInZodStack(schema);
     const type = inferFieldType(baseSchema, fieldType);
@@ -97,7 +101,12 @@ function parseField(
     // Arrays and objects
     const getSubSchema = typeMapping[baseSchema._def.typeName as keyof typeof typeMapping];
 
-    const subSchema = getSubSchema?.(baseSchema, name, history, dependecys);
+    const subSchema = getSubSchema?.({
+        name,
+        schema: baseSchema,
+        history,
+        dependecys,
+    });
 
     if (baseSchema._def.typeName === 'ZodArray') {
         fieldConfig = {
@@ -107,8 +116,15 @@ function parseField(
         };
     }
 
+    const historyFormat = history ? [history] : [];
+
+    historyFormat.push(name);
+
     const resp = {
-        name: { current: name, history: [history, name].join('.') },
+        name: {
+            current: name,
+            history: historyFormat.join('.'),
+        },
         type,
         required: !schema.isOptional(),
         default: defaultValue,
@@ -143,7 +159,11 @@ export const parseSchema = (S: ZodObjectOrWrapped): ParsedSchema => {
     const fields = Object.fromEntries(
         Object.entries(shape).map(([key, field]) => [
             key,
-            parseField(key, field as z.ZodTypeAny, '', dependecys),
+            parseField({
+                name: key,
+                schema: field as z.ZodTypeAny,
+                dependecys,
+            }),
         ]),
     );
 
