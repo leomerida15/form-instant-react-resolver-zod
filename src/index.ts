@@ -1,4 +1,6 @@
+export * from './context';
 export * from './element';
-export * from './funcs/field-config';
+export * from './global.d';
 export * from './provider';
 export * from './type';
+export * from './useSchema';
