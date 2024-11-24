@@ -118,8 +118,10 @@ function parseField({
         }
     }
 
+    const { typeName } = baseSchema._def;
+
     // Arrays and objects
-    const getSubSchema = typeMapping[baseSchema._def.typeName as keyof typeof typeMapping];
+    const getSubSchema = typeMapping[typeName as keyof typeof typeMapping];
 
     const subSchema = getSubSchema?.({
         name,
@@ -128,13 +130,11 @@ function parseField({
         dependecys,
     });
 
-    if (baseSchema._def.typeName === 'ZodArray') {
-        fieldConfig = {
-            min: baseSchema._def.minLength?.value || 1,
-            max: baseSchema._def.maxLength?.value,
-            ...fieldConfig,
-        };
-    }
+    fieldConfig = {
+        min: baseSchema._def.minLength?.value || 1,
+        max: baseSchema._def.maxLength?.value,
+        ...fieldConfig,
+    };
 
     let historyFormat = (history ? [history, name] : [name]).join('.');
 

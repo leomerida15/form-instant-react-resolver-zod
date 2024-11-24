@@ -10,6 +10,14 @@ export function getDefaultValueInZodStack(schema: z.ZodTypeAny): any {
         return getDefaultValueInZodStack(schema.innerType());
     }
 
+    if (schema._def.typeName === 'ZodObject') {
+        return {};
+    }
+
+    if (schema._def.typeName === 'ZodArray') {
+        return [];
+    }
+
     return undefined;
 }
 
