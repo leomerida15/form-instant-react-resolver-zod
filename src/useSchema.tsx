@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import { useContext } from 'use-context-selector';
 import { ZodEffects, ZodObject } from 'zod';
 import { ZodResolverContext } from './context';
@@ -23,7 +22,7 @@ type Data =
 type DP = Record<string, any>;
 
 export const useSchema = (cbP: (dp: DP, preData?: Data) => Data, dp: DP) => {
-    const schema = useMemo(() => cbP(dp).fieldConfig(dp), [cbP, dp]);
+    const schema = cbP(dp).fieldConfig(dp);
 
     return { schema };
 };
