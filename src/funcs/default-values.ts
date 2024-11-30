@@ -1,13 +1,13 @@
-import { z } from 'zod';
+import { z, ZodEffects } from 'zod';
 import { ZodObjectOrWrapped } from './types';
 
 export function getDefaultValueInZodStack(schema: z.ZodTypeAny): any {
-    if (schema instanceof z.ZodDefault) {
+    if (schema._def.typeName === 'ZodDefault') {
         return schema._def.defaultValue();
     }
 
-    if (schema instanceof z.ZodEffects) {
-        return getDefaultValueInZodStack(schema.innerType());
+    if (schema._def.typeName === 'ZodEffects') {
+        return getDefaultValueInZodStack((schema as ZodEffects<any>).innerType());
     }
 
     return undefined;
