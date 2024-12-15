@@ -11,7 +11,7 @@
         "skipLibCheck": true,
 
         /* Bundler mode */
-        "moduleResolution": "nodenext",
+        "moduleResolution": "node",
         "allowImportingTsExtensions": false,
         "isolatedModules": true,
         "moduleDetection": "force",
@@ -27,7 +27,11 @@
         /* Incremental compilation */
         "incremental": true,
 
-
+        /* Paths */
+        "baseUrl": "./",
+        "paths": {
+            "*": ["src/*"]
+        }
     },
 
     "include": ["src", "types", "zod"]
