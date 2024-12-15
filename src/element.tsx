@@ -11,10 +11,9 @@ export const FormInstantElement = <S extends Record<string, any>>({ name }: Elem
 
     const id = useId();
 
-    const IndexCase = (field.fieldConfig as any)?.type ? 1 : 0;
+    if ((field.fieldConfig as any)?.type) return <ElementMapping formProps={field} />;
 
-    const Cases = [
-        <ElementMapping formProps={field} />,
+    return (
         <>
             {Object.values(field.schema || {}).map((props) => {
                 return (
@@ -23,14 +22,6 @@ export const FormInstantElement = <S extends Record<string, any>>({ name }: Elem
                     </Fragment>
                 );
             })}
-        </>,
-    ];
-
-    return (
-        <>
-            {Cases.map((Case, index) => <Fragment key={`${id}-${index}`}>{Case}</Fragment>).filter(
-                (_, index) => index === IndexCase,
-            )}
         </>
     );
 };
