@@ -11,7 +11,7 @@ export const FormInstantElement = <S extends Record<string, any>>({ name }: Elem
 
     const id = useId();
 
-    if (Object.keys(field.fieldConfig).length) return <ElementMapping formProps={field} />;
+    if (Object.keys(field.fieldConfig || {}).length) return <ElementMapping formProps={field} />;
 
     return (
         <>
