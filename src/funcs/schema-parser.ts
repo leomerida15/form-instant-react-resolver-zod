@@ -174,7 +174,7 @@ export const parseSchema = (S: ZodObjectOrWrapped): ParsedSchema => {
     const objectSchema = S instanceof z.ZodEffects ? S.innerType() : S;
     const shape = objectSchema.shape;
 
-    const dependecys = (objectSchema._def as any).fieldConfig;
+    const dependecys = (objectSchema._def as any).fieldConfig?.dp || {};
 
     const fields = Object.fromEntries(
         Object.entries(shape).map(([key, field]) => [

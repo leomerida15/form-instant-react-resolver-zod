@@ -22,7 +22,11 @@ type Data =
 type DP = Record<string, any>;
 
 export const useSchema = (cbP: (dp: DP, preData?: Data) => Data, dp: DP) => {
-    const schema = cbP(dp).fieldConfig(dp);
+    const schemaCB = cbP(dp);
+
+    const { fieldConfig = {} } = (schemaCB._def as any);
+    
+    const schema = schemaCB.fieldConfig({ dp,...fieldConfig });
 
     return { schema };
 };
