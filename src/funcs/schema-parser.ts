@@ -194,6 +194,8 @@ export const parseSchema = (S: ZodObjectOrWrapped): ParsedSchema => {
 
     const dependecys = (objectSchema._def as any).fieldConfig?.dp || {};
 
+    console.log('dependecys', dependecys)
+
     const fields = Object.fromEntries(
         Object.entries(shape).map(([key, field]) => [
             key,
