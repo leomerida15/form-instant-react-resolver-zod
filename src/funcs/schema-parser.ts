@@ -130,11 +130,12 @@ function parseField({
         dependecys,
     });
 
-    fieldConfig = {
-        min: baseSchema._def.minLength?.value || 1,
-        max: baseSchema._def.maxLength?.value,
-        ...fieldConfig,
-    };
+    if (type === 'array')
+        fieldConfig = {
+            min: baseSchema._def.minLength?.value || 1,
+            max: baseSchema._def.maxLength?.value,
+            ...fieldConfig,
+        };
 
     let historyFormat = (history ? [history, name] : [name]).join('.');
 

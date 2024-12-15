@@ -24,9 +24,9 @@ type DP = Record<string, any>;
 export const useSchema = (cbP: (dp: DP, preData?: Data) => Data, dp: DP) => {
     const schemaCB = cbP(dp);
 
-    const { fieldConfig = {} } = (schemaCB._def as any);
-    
-    const schema = schemaCB.fieldConfig({ dp,...fieldConfig });
+    const { fieldConfig = {} } = schemaCB._def as any;
+
+    const schema = schemaCB.fieldConfig({ dp, ...fieldConfig });
 
     return { schema };
 };
