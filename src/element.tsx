@@ -9,13 +9,13 @@ export interface ElementProps<Schema extends Record<string, any>> {
 export const FormInstantElement = <S extends Record<string, any>>({ name }: ElementProps<S>) => {
     const field = useFields(name);
 
-    const inputs = Object.values(field.schema || {});
-
     const id = useId();
+
+    if (field.fieldConfig) return <ElementMapping formProps={field} />;
 
     return (
         <>
-            {inputs.map((props) => {
+            {Object.values(field.schema || {}).map((props) => {
                 return (
                     <Fragment key={`${id}-${props.name?.history || ''}`}>
                         <ElementMapping formProps={props} />
