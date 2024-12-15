@@ -130,6 +130,23 @@ function parseField({
         dependecys,
     });
 
+    if (typeName === 'ZodDiscriminatedUnion') {
+        const { optionsMap, discriminator } = baseSchema._def;
+
+        const optionKey = dependecys[discriminator];
+
+        if (optionKey) {
+            const option = optionsMap.get(optionKey);
+
+            if (option._def.fieldConfig) {
+                fieldConfig = {
+                    ...fieldConfigBase,
+                    ...option._def.fieldConfig,
+                };
+            }
+        }
+    }
+
     if (type === 'array')
         fieldConfig = {
             min: baseSchema._def.minLength?.value || 1,
