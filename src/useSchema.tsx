@@ -28,7 +28,13 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
             if (schema instanceof z.ZodEffects) return schema.innerType().shape;
             if (schema instanceof z.ZodObject) return schema.shape;
 
+            console.log('schema._def.discriminator', schema._def.discriminator);
+
+            console.log('dp[schema._def.discriminator]', dp[schema._def.discriminator]);
+
             const option = schema._def.optionsMap.get(dp[schema._def.discriminator]);
+
+            console.log('option', option);
 
             if (!option) throw new Error('No option found');
 
