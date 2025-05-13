@@ -29,10 +29,6 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
                 return (schema as z.ZodEffects<any>).innerType().shape;
             if (schema._def.typeName === 'ZodObject') return (schema as z.ZodObject<any>).shape;
 
-            console.log('schema._def.discriminator', schema._def.discriminator);
-
-            console.log('dp[schema._def.discriminator]', dp[schema._def.discriminator]);
-
             const option = schema._def.optionsMap.get(dp[schema._def.discriminator]);
 
             console.log('option', option);
@@ -41,6 +37,8 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
 
             return option.shape;
         })();
+
+        console.log('shape', shape);
 
         const initialValues: Record<string, any> = {};
 
@@ -55,19 +53,19 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
             }
 
             // Inferir tipo para campos requeridos sin default
-            if (fieldSchema instanceof z.ZodString) {
+            if (fieldSchema._def.typeName === 'ZodString') {
                 initialValues[key] = '';
-            } else if (fieldSchema instanceof z.ZodNumber) {
+            } else if (fieldSchema._def.typeName === 'ZodNumber') {
                 initialValues[key] = 0;
-            } else if (fieldSchema instanceof z.ZodBoolean) {
+            } else if (fieldSchema._def.typeName === 'ZodBoolean') {
                 initialValues[key] = false;
-            } else if (fieldSchema instanceof z.ZodDate) {
+            } else if (fieldSchema._def.typeName === 'ZodDate') {
                 initialValues[key] = null;
-            } else if (fieldSchema instanceof z.ZodArray) {
+            } else if (fieldSchema._def.typeName === 'ZodArray') {
                 initialValues[key] = [];
-            } else if (fieldSchema instanceof z.ZodObject) {
+            } else if (fieldSchema._def.typeName === 'ZodObject') {
                 initialValues[key] = generateInitialValues(fieldSchema, dp);
-            } else if (fieldSchema instanceof z.ZodDiscriminatedUnion) {
+            } else if (fieldSchema._def.typeName === 'ZodDiscriminatedUnion') {
                 const option = fieldSchema._def.optionsMap.get(dp[fieldSchema._def.discriminator]);
 
                 if (option) {
@@ -100,7 +98,6 @@ export const useSchema = <S extends Record<string, any>>(
     dp: DP,
 ) => {
     const schema = useMemo(() => cbP(dp).fieldConfig({ dp, ...cbP(dp).fieldConfig }), [cbP, dp]);
-    console.log('schema', schema);
 
     const initialValues = useMemo(() => generateInitialValues(schema, dp) as S, [schema, dp]);
     console.log('initialValues', initialValues);
