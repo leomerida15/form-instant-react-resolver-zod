@@ -73,8 +73,12 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
             }
         }
 
+        console.log('initialValues build', initialValues);
+
         return initialValues as S;
     } catch {
+        console.log('initialValues error');
+
         return {} as S;
     }
 };
@@ -84,8 +88,10 @@ export const useSchema = <S extends Record<string, any>>(
     dp: DP,
 ) => {
     const schema = useMemo(() => cbP(dp).fieldConfig({ dp, ...cbP(dp).fieldConfig }), [cbP, dp]);
+    console.log('schema', schema);
 
     const initialValues = useMemo(() => generateInitialValues(schema, dp) as S, [schema, dp]);
+    console.log('initialValues', initialValues);
 
     return { schema, initialValues };
 };
