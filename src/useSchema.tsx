@@ -83,7 +83,12 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
 
         return initialValues as S;
     } catch (error) {
-        console.log('initialValues error', error);
+        console.log('initialValues error');
+        debugger;
+        if (error instanceof Error) {
+            console.log(error.cause);
+            console.log(error.message);
+        }
 
         return {} as S;
     }
