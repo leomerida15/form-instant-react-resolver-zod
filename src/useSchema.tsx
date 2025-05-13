@@ -1,6 +1,6 @@
 import { useMemo } from 'react';
 import { useContext } from 'use-context-selector';
-import { z, ZodAny, ZodEffects, ZodObject } from 'zod';
+import { z, ZodEffects, ZodObject } from 'zod';
 import { ZodResolverContext } from './context';
 import { parseSchema } from './funcs/schema-parser';
 
@@ -79,7 +79,7 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
     }
 };
 
-export const useSchema = <S extends ZodAny>(cbP: (dp: DP, preData?: Data) => Data, dp: DP) => {
+export const useSchema = <S extends any>(cbP: (dp: DP, preData?: Data) => Data, dp: DP) => {
     const schema = useMemo(() => cbP(dp).fieldConfig({ dp, ...cbP(dp).fieldConfig }), [cbP, dp]);
 
     const initialValues = useMemo(() => generateInitialValues(schema, dp) as S, [schema, dp]);
