@@ -31,14 +31,10 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
 
             const option = schema._def.optionsMap.get(dp[schema._def.discriminator]);
 
-            console.log('option', option);
-
             if (!option) throw new Error('No option found');
 
             return option.shape;
         })();
-
-        console.log('shape', shape);
 
         const initialValues: Record<string, any> = {};
 
@@ -78,8 +74,6 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
             }
         }
 
-        console.log('initialValues build', initialValues);
-
         return initialValues as S;
     } catch (error) {
         console.log('🔴 initialValues error', error);
@@ -100,7 +94,6 @@ export const useSchema = <S extends Record<string, any>>(
     const schema = useMemo(() => cbP(dp).fieldConfig({ dp, ...cbP(dp).fieldConfig }), [cbP, dp]);
 
     const initialValues = useMemo(() => generateInitialValues(schema, dp) as S, [schema, dp]);
-    console.log('initialValues', initialValues);
 
     return { schema, initialValues };
 };
