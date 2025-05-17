@@ -24,6 +24,8 @@ type DP = Record<string, any>;
 
 export const generateInitialValues = <S extends Record<string, any>>(schema: Data, dp: DP): S => {
     try {
+        console.log('dp', dp);
+        console.log('schema._def.discriminator', (schema._def as any).discriminator);
         const shape = (() => {
             if (schema._def.typeName === 'ZodEffects')
                 return (schema as z.ZodEffects<any>).innerType().shape;
