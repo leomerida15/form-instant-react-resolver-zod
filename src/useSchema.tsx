@@ -26,6 +26,7 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
     try {
         console.log('dp', dp);
         console.log('schema._def.discriminator', (schema._def as any).discriminator);
+        console.log('schema', schema);
         const shape = (() => {
             if (schema._def.typeName === 'ZodEffects')
                 return (schema as z.ZodEffects<any>).innerType().shape;
