@@ -24,9 +24,6 @@ type DP = Record<string, any>;
 
 export const generateInitialValues = <S extends Record<string, any>>(schema: Data, dp: DP): S => {
     try {
-        console.log('dp', dp);
-        console.log('schema._def.discriminator', (schema._def as any).discriminator);
-        console.log('schema', schema);
         const shape = (() => {
             if (schema._def.typeName === 'ZodEffects')
                 return (schema as z.ZodEffects<any>).innerType().shape;
@@ -66,6 +63,8 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
                 initialValues[key] = generateInitialValues(fieldSchema, dp);
             } else if (fieldSchema._def.typeName === 'ZodDiscriminatedUnion') {
                 const option = fieldSchema._def.optionsMap.get(dp[fieldSchema._def.discriminator]);
+
+                console.log('fieldSchema._def.discriminator', fieldSchema._def.discriminator);
 
                 if (option) {
                     initialValues[key] = generateInitialValues(option, dp);
