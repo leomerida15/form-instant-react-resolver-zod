@@ -48,32 +48,52 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
                 continue;
             }
 
-            // Inferir tipo para campos requeridos sin default
-            if (fieldSchema._def.typeName === 'ZodString') {
-                initialValues[key] = '';
-            } else if (fieldSchema._def.typeName === 'ZodNumber') {
-                initialValues[key] = 0;
-            } else if (fieldSchema._def.typeName === 'ZodBoolean') {
-                initialValues[key] = false;
-            } else if (fieldSchema._def.typeName === 'ZodDate') {
-                initialValues[key] = null;
-            } else if (fieldSchema._def.typeName === 'ZodArray') {
-                initialValues[key] = [];
-            } else if (fieldSchema._def.typeName === 'ZodObject') {
-                initialValues[key] = generateInitialValues(fieldSchema, dp);
-            } else if (fieldSchema._def.typeName === 'ZodDiscriminatedUnion') {
-                const option = fieldSchema._def.optionsMap.get(dp[fieldSchema._def.discriminator]);
-
-                console.log('fieldSchema._def.discriminator', fieldSchema._def.discriminator);
-
-                if (option) {
-                    initialValues[key] = generateInitialValues(option, dp);
-                } else {
-                    initialValues[key] = null;
-                }
-            } else {
-                initialValues[key] = null;
+            if (Object.keys(dp).includes(key)) {
+                initialValues[key] = dp[key];
+                continue;
             }
+            // Inferir tipo para campos requeridos sin default
+            const fieldConfig = {
+                ZodString() {
+                    initialValues[key] = '';
+                },
+                ZodNumber() {
+                    initialValues[key] = 0;
+                },
+                ZodBoolean() {
+                    initialValues[key] = false;
+                },
+                ZodDate() {
+                    initialValues[key] = null;
+                },
+                ZodArray() {
+                    initialValues[key] = [];
+                },
+                ZodObject() {
+                    initialValues[key] = generateInitialValues(fieldSchema, dp);
+                },
+                ZodDiscriminatedUnion() {
+                    const option = fieldSchema._def.optionsMap.get(
+                        dp[fieldSchema._def.discriminator],
+                    );
+
+                    if (option) {
+                        initialValues[key] = generateInitialValues(option, dp);
+                    } else {
+                        initialValues[key] = null;
+                    }
+                },
+            };
+
+            const fieldType = fieldSchema._def.typeName;
+            const fieldHandler = fieldConfig[fieldType as keyof typeof fieldConfig];
+
+            if (fieldHandler) {
+                fieldHandler();
+                continue;
+            }
+
+            initialValues[key] = null;
         }
 
         return initialValues as S;
