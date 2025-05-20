@@ -113,9 +113,15 @@ export const useSchema = <S extends Record<string, any>>(
     cbP: (dp: DP, preData?: Data) => Data,
     dp: DP,
 ) => {
-    const schema = useMemo(() => cbP(dp).fieldConfig({ dp, ...cbP(dp).fieldConfig }), [cbP, dp]);
+    const schema = useMemo(
+        () => cbP(dp).fieldConfig({ dp, ...cbP(dp).fieldConfig }),
+        [cbP, JSON.stringify(dp)],
+    );
 
-    const initialValues = useMemo(() => generateInitialValues(schema, dp) as S, [schema, dp]);
+    const initialValues = useMemo(
+        () => generateInitialValues(schema, dp) as S,
+        [schema, JSON.stringify(dp)],
+    );
 
     return { schema, initialValues };
 };
