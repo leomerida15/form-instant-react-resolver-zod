@@ -15,10 +15,7 @@ export const useFields = <Sc extends Record<string, any>>(key: keyof Sc) => {
     return fields[key as string];
 };
 
-type Data =
-    | Zod.AnyZodObject
-    | Zod.ZodEffects<Zod.AnyZodObject>
-    | Zod.ZodDiscriminatedUnion<any, any>;
+type Data = z.AnyZodObject | z.ZodEffects<z.AnyZodObject> | z.ZodDiscriminatedUnion<any, any>;
 
 type DP = Record<string, any>;
 
