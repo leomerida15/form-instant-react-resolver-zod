@@ -19,18 +19,21 @@ export const extendZodWithFieldConfig = <AdditionalRenderable = null, FieldTypes
         this._def.fieldConfig = config;
         return this;
     };
-    const originalObject = zod.object;
-    zod.object = ((...args: [any]) => {
-        const schema = originalObject(...args);
-        (schema._def as any).default = () => ({});
-        return schema;
-    }) as any;
-    const originalArray = zod.array;
-    zod.array = ((...args: [any]) => {
-        const schema = originalArray(...args);
-        (schema._def as any).default = () => [];
-        return schema;
-    }) as any;
+    const { object, array, ...zodRest } = zod;
+
+    zod = {
+        object: ((...args: [any]) => {
+            const schema = object(...args);
+            (schema._def as any).default = () => ({});
+            return schema;
+        }) as any,
+        array: ((...args: [any]) => {
+            const schema = array(...args);
+            (schema._def as any).default = () => [];
+            return schema;
+        }) as any,
+        ...zodRest,
+    };
 };
 
 export const createZodSchemaFieldConfig =
