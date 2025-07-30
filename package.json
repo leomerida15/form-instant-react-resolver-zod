@@ -79,5 +79,8 @@
             "limit": "10 KB"
         }
     ],
-    "typings": "dist/index.d.ts"
+    "typings": "dist/index.d.ts",
+    "dependencies": {
+        "minimatch": "^10.0.3"
+    }
 }
