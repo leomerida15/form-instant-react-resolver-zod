@@ -55,7 +55,7 @@ const typeMapping: typeMappingType = {
                 current: discriminator,
                 history: historyFormat,
             },
-            type: 'discriminator',
+            fieldType: 'discriminator',
             required: true,
             default: optionKey,
             fieldConfig,
@@ -163,7 +163,7 @@ function parseField({
             current: name,
             history: historyFormat,
         },
-        type,
+        fieldType: type,
         required: !schema.isOptional(),
         default: defaultValue,
         fieldConfig,
@@ -194,16 +194,16 @@ export const parseSchema = (S: ZodObjectOrWrapped): ParsedSchema => {
 
     const dependecys = (objectSchema._def as any).fieldConfig?.dp || {};
 
-    const fields = Object.fromEntries(
-        Object.entries(shape).map(([key, field]) => [
-            key,
-            parseField({
-                name: key,
-                schema: field as z.ZodTypeAny,
-                dependecys,
-            }),
-        ]),
-    );
+    const fieldsEntries = Object.entries(shape).map(([key, field]) => [
+        key,
+        parseField({
+            name: key,
+            schema: field as z.ZodTypeAny,
+            dependecys,
+        }),
+    ]);
+
+    const fields = Object.fromEntries(fieldsEntries);
 
     return { fields };
 };

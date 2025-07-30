@@ -1,57 +1,17 @@
 {
     "name": "@form-instant/react-resolver-zod",
-    "version": "1.5.0",
-    "license": "MIT",
+    "version": "1.6.0",
     "author": {
         "name": "leomerida15",
         "email": "dimasmerida15@gmail.com",
         "url": "https://github.com/leomerida15"
     },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/leomerida15/form-instant-react-resolver-zod.git"
+    },
     "main": "dist/index.js",
     "module": "dist/react-input-mapping.esm.js",
-    "typings": "dist/index.d.ts",
-    "files": [
-        "dist"
-    ],
-    "scripts": {
-        "analyze": "size-limit --why",
-        "build": "dts build",
-        "lint": "dts lint",
-        "prepare": "dts build",
-        "size": "size-limit",
-        "start": "dts watch",
-        "test": "dts test --passWithNoTests",
-        "Up": "npm publish --access public"
-    },
-    "husky": {
-        "hooks": {
-            "pre-commit": "dts lint"
-        }
-    },
-    "jest": {
-        "testEnvironment": "jsdom"
-    },
-    "peerDependencies": {
-        "@form-instant/react-input-mapping": "^1.6.0",
-        "react": "^19.0.0",
-        "react-dom": "^19.0.0"
-    },
-    "engines": {
-        "node": ">=12"
-    },
-    "size-limit": [
-        {
-            "path": "dist/react-input-mapping.cjs.production.min.js",
-            "limit": "10 KB"
-        },
-        {
-            "path": "dist/react-input-mapping.esm.js",
-            "limit": "10 KB"
-        }
-    ],
-    "dependencies": {
-        "use-context-selector": "^2.0.0"
-    },
     "devDependencies": {
         "@size-limit/preset-small-lib": "^11.2.0",
         "@tsconfig/recommended": "^1.0.10",
@@ -71,15 +31,53 @@
         "typescript": "~5.0.4",
         "zod": "^3.25.67"
     },
+    "peerDependencies": {
+        "@form-instant/react-input-mapping": "^1.8.0",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0"
+    },
+    "engines": {
+        "node": ">=12"
+    },
+    "files": [
+        "dist"
+    ],
     "homepage": "https://leomerida15.github.io/form-instant-react-mapping",
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/leomerida15/form-instant-react-resolver-zod.git"
+    "husky": {
+        "hooks": {
+            "pre-commit": "dts lint"
+        }
+    },
+    "jest": {
+        "testEnvironment": "jsdom"
     },
     "keywords": [
         "@form-instant",
         "react",
         "mapping",
         "zod"
-    ]
+    ],
+    "license": "MIT",
+    "scripts": {
+        "analyze": "size-limit --why",
+        "build": "dts build",
+        "lint": "dts lint",
+        "prepare": "dts build",
+        "size": "size-limit",
+        "start": "dts watch",
+        "test": "dts test --passWithNoTests",
+        "Up": "npm publish --access public",
+        "Up:rc": "npm publish --access public --tag rc"
+    },
+    "size-limit": [
+        {
+            "path": "dist/react-input-mapping.cjs.production.min.js",
+            "limit": "10 KB"
+        },
+        {
+            "path": "dist/react-input-mapping.esm.js",
+            "limit": "10 KB"
+        }
+    ],
+    "typings": "dist/index.d.ts"
 }

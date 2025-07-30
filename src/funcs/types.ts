@@ -17,6 +17,7 @@ export type Renderable<AdditionalRenderable = null> =
     | undefined
     | AdditionalRenderable;
 
-export type FieldConfig<AdditionalRenderable = object, FieldTypes = string> = {
-    fieldType?: FieldTypes;
-} & AdditionalRenderable;
+// Simplify conditional type:
+export type FieldConfig<Ob, K extends keyof Ob> = {
+    fieldType: K;
+} & Ob[K];

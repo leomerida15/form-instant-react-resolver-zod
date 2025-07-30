@@ -1,5 +1,4 @@
-import { useMemo } from 'react';
-import { useContext } from 'use-context-selector';
+import { useContext, useMemo } from 'react';
 import { z, ZodEffects, ZodObject } from 'zod';
 import { ZodResolverContext } from './context';
 import { parseSchema } from './funcs/schema-parser';
@@ -111,7 +110,7 @@ export const useSchema = <S extends Record<string, any>>(
     dp: DP,
 ) => {
     const schema = useMemo(
-        () => cbP(dp).fieldConfig({ dp, ...cbP(dp).fieldConfig }),
+        () => (cbP(dp) as any).fieldConfig({ dp, ...cbP(dp).fieldConfig }),
         [cbP, JSON.stringify(dp)],
     );
 

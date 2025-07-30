@@ -11,11 +11,11 @@ export const FormInstantElement = <S extends Record<string, any>>({ name }: Elem
 
     const id = useId();
 
-    if ((field.fieldConfig as any)?.type) return <ElementMapping formProps={field} />;
+    if (!['object'].includes(field.fieldType)) return <ElementMapping formProps={field} />;
 
     return (
         <>
-            {Object.values(field.schema || {}).map((props) => {
+            {Object.values(field.schema || {}).map((props: any) => {
                 return (
                     <Fragment key={`${id}-${props.name?.history || ''}`}>
                         <ElementMapping formProps={props} />
