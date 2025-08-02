@@ -1,6 +1,6 @@
 {
     "name": "@form-instant/react-resolver-zod",
-    "version": "1.6.2",
+    "version": "1.6.4",
     "author": {
         "name": "leomerida15",
         "email": "dimasmerida15@gmail.com",
@@ -29,7 +29,8 @@
         "size-limit": "^11.2.0",
         "tslib": "^2.8.1",
         "typescript": "~5.0.4",
-        "zod": "^3.25.67"
+        "zod": "^3.25.67",
+        "minimatch": "^10.0.3"
     },
     "peerDependencies": {
         "@form-instant/react-input-mapping": "^1.8.0",
@@ -79,8 +80,5 @@
             "limit": "10 KB"
         }
     ],
-    "typings": "dist/index.d.ts",
-    "dependencies": {
-        "minimatch": "^10.0.3"
-    }
+    "typings": "dist/index.d.ts"
 }

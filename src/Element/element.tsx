@@ -1,6 +1,7 @@
+'use client';
 import { ElementMapping } from '@form-instant/react-input-mapping';
 import { Fragment, useId } from 'react';
-import { useFields } from './useSchema';
+import { useFields } from '../useSchema';
 
 export interface ElementProps<Schema extends Record<string, any>> {
     name: keyof Schema;
