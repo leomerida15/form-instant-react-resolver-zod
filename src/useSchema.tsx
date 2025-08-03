@@ -18,7 +18,7 @@ type Data = z.AnyZodObject | z.ZodEffects<z.AnyZodObject> | z.ZodDiscriminatedUn
 
 type DP = Record<string, any>;
 
-export const generateInitialValues = <S extends Record<string, any>>(schema: Data, dp: DP): S => {
+const generateInitialValues = <T extends Data>(schema: T, dp: DP): z.infer<T> => {
     try {
         const shape = (() => {
             if (schema._def.typeName === 'ZodEffects')
@@ -92,7 +92,7 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
             initialValues[key] = null;
         }
 
-        return initialValues as S;
+        return initialValues as z.infer<T>;
     } catch (error) {
         console.log('🔴 initialValues error', error);
 
@@ -101,20 +101,17 @@ export const generateInitialValues = <S extends Record<string, any>>(schema: Dat
             console.log(error.message);
         }
 
-        return {} as S;
+        return {} as z.infer<T>;
     }
 };
 
-export const useSchema = <S extends Record<string, any>>(
-    cbP: (dp: DP, preData?: Data) => Data,
-    dp: DP,
-) => {
+export const useSchema = <T extends Data>(cbP: (dp: DP, preData?: Data) => T, dp: DP) => {
     const schema = useMemo(
-        () => (cbP(dp) as any).fieldConfig({ dp, ...cbP(dp).fieldConfig }),
+        () => cbP(dp).fieldConfig({ dp, ...cbP(dp).fieldConfig }) as T,
         [cbP, dp],
     );
 
-    const initialValues = useMemo(() => generateInitialValues(schema, dp) as S, [schema, dp]);
+    const initialValues = useMemo(() => generateInitialValues<T>(schema, dp), [schema, dp]);
 
-    return { schema, initialValues };
+    return { schema, initialValues } as const;
 };
