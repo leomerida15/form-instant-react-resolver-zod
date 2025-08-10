@@ -12,23 +12,11 @@ export const FormInstantElement = <S extends Record<string, any>>({ name }: Elem
 
     const id = useId();
 
-    // Map FieldMetadata to the expected format for ElementMapping
-    const mappedField = {
-        ...field,
-        fieldType: field.type, // Map 'type' to 'fieldType'
-        schema: field.fieldConfig?.schema || field.fieldConfig, // Use fieldConfig as schema
-        name: {
-            current: field.name,
-            history: field.name,
-        },
-    };
-
-    if (!['object'].includes(mappedField.fieldType))
-        return <ElementMapping formProps={mappedField} />;
+    if (!['object'].includes(field.fieldType)) return <ElementMapping formProps={field} />;
 
     return (
         <>
-            {Object.values(mappedField.schema || {}).map((props: any) => {
+            {Object.values(field.schema || {}).map((props: any) => {
                 return (
                     <Fragment key={`${id}-${props.name?.history || ''}`}>
                         <ElementMapping formProps={props} />

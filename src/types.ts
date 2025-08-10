@@ -1,3 +1,4 @@
+import { ParsedField } from '@form-instant/react-input-mapping';
 import { ReactNode } from 'react';
 
 // Core schema types - compatible with Zod v4
@@ -16,15 +17,7 @@ export type FieldConfig<Ob, K extends keyof Ob = keyof Ob> = {
 } & Ob[K];
 
 // Field metadata types with fieldConfig support
-export interface FieldMetadata {
-    name: string;
-    type: string;
-    required: boolean;
-    defaultValue?: any;
-    description?: string;
-    path: SchemaPath;
-    fieldConfig?: any; // Extracted fieldConfig from schema
-}
+export type FieldMetadata = ParsedField<any, string>;
 
 // Schema metadata types
 export interface SchemaMetadata {

@@ -8,7 +8,7 @@ export * from './components/SchemaMapper';
 
 // FormInstant components (legacy compatibility)
 export { FormInstantProvider } from './components/FormInstantProvider';
-export { FormInstantElement as FormInstantElementV2 } from './components/FormInstantElement';
+export { FormInstantElement } from './components/FormInstantElement';
 
 // Types and utilities
 export * from './types';

@@ -19,7 +19,7 @@ function extractFieldConfig(schema: z.ZodTypeAny) {
 /**
  * Parses a Zod schema and extracts metadata for mapping
  */
-export function parseSchema(schema: z.ZodTypeAny): SchemaMetadata {
+export function parseSchema(schema: z.ZodTypeAny): { fields: Record<string, any> } {
     const fields: Record<string, FieldMetadata> = {};
     const paths: SchemaPath[] = [];
     const structure: Record<string, any> = {};
@@ -81,14 +81,30 @@ export function parseSchema(schema: z.ZodTypeAny): SchemaMetadata {
             }
         }
 
+        // Extract options for enums
+        const options: [string, string][] = (() => {
+            if (fieldSchema instanceof z.ZodEnum) {
+                return fieldSchema.options.map((value) => [String(value), String(value)]);
+            }
+
+            if (fieldSchema.constructor.name === 'ZodNativeEnum') {
+                const enumValues = (fieldSchema as z.ZodEnum).options;
+                return enumValues.map((value) => [String(value), String(value)]);
+            }
+            return [];
+        })();
+
         // Create field metadata
         const fieldMetadata: FieldMetadata = {
-            name: fieldName,
-            type: fieldType,
+            name: {
+                current: fieldName,
+                history: currentPath,
+            },
+            fieldType: fieldType,
             required: isRequired,
-            defaultValue,
-            path: currentPath,
-            fieldConfig, // Include extracted fieldConfig
+            default: defaultValue,
+            fieldConfig,
+            options,
         };
 
         // Store field metadata by path
@@ -139,8 +155,6 @@ export function parseSchema(schema: z.ZodTypeAny): SchemaMetadata {
 
     return {
         fields,
-        paths,
-        structure,
     };
 }
 
