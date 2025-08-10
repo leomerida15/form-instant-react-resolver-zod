@@ -1,0 +1,22 @@
+{
+    "mcpServers": {
+        "gobernai-dev": {
+            "command": "npx",
+            "args": [
+                "-y @supabase/mcp-server-supabase@latest --read-only --project-ref=qklwlyoenlffxnwrkxuc"
+            ],
+            "env": {
+                "SUPABASE_ACCESS_TOKEN": "sbp_a2ba542aca5859350891b52cfeb590c4516f6bb9"
+            }
+        },
+        "context7": {
+            "url": "https://mcp.context7.com/mcp"
+        },
+        "redux-devtools-Docs": {
+            "url": "https://gitmcp.io/reduxjs/redux-devtools"
+        },
+        "zod Docs": {
+            "url": "https://gitmcp.io/colinhacks/zod"
+        }
+    }
+}

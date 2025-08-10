@@ -1,0 +1,107 @@
+{
+  "a-file-icon-vscode.arrowTheme": "material",
+  "[css]": {
+    "editor.defaultFormatter": "vscode.css-language-features"
+  },
+  "[prisma]": {
+    "editor.defaultFormatter": "Prisma.prisma-insider"
+  },
+  "[sql]": {
+    "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
+  },
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "cSpell.words": ["supabase"],
+  "deno.enablePaths": ["supabase/functions"],
+  "deno.lint": true,
+  "deno.unstable": [
+    "bare-node-builtins",
+    "byonm",
+    "sloppy-imports",
+    "unsafe-proto",
+    "webgpu",
+    "broadcast-channel",
+    "worker-options",
+    "cron",
+    "kv",
+    "ffi",
+    "fs",
+    "http",
+    "net"
+  ],
+  "editor.bracketPairColorization.enabled": true,
+
+  "editor.cursorBlinking": "phase",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.fontLigatures": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+  "editor.formatOnType": true,
+  "editor.linkedEditing": true,
+  "eslint.runtime": "bun",
+  "exportall.config.folderListener": [
+    "/app/(front)/utils",
+    "/app/(front)/utils/components/ui",
+    "/app/(front)/utils/components/customs",
+    "/app/(front)/utils/components/customs/CardTitleToBack",
+    "/app/(front)/utils/hooks/store",
+    "/app/(front)/utils/hooks",
+    "/app/(front)/_utils/components/from/mapping"
+  ],
+  "exportall.config.relExclusion": ["/app/(front)/(views)/auth"],
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+  "i18n-ally.keystyle": "nested",
+  "i18n-ally.localesPaths": [
+    "app/_common/locales/messages",
+    "app/_common/locales",
+    "app/_common/locales/i18n"
+  ],
+  "i18n-ally.sourceLanguage": "es",
+  "material-icon-theme.activeIconPack": "react",
+  "material-icon-theme.files.associations": {
+    ".bumrc": "Bun",
+    "page.tsx": "Exe",
+    "prisma.config.js": "jsconfig",
+    "prisma.config.ts": "tsconfig",
+    "route.ts": "routing"
+  },
+  "material-icon-theme.folders.associations": {
+    "(front)": "client",
+    "(pages)": "views",
+    "(router)": "routes",
+    "(views)": "views",
+    "Entity": "class",
+    "Entitys": "class",
+    "Schema": "docs",
+    "Schemas": "docs",
+    "[...not-found]": "error",
+    "[views]": "views",
+    "codes": "docs",
+    "company": "Jinja",
+    "dto": "interface",
+    "dtos": "interface",
+    "entity": "class",
+    "entitys": "class",
+    "enum": "interface",
+    "enums": "interface",
+    "file": "public",
+    "files": "docs",
+    "lab": "test",
+    "publics": "public",
+    "queries": "scripts",
+    "query": "scripts",
+    "redux": "redux-actions",
+    "schema": "docs",
+    "schemas": "docs",
+    "state": "redux-store",
+    "ui": "theme",
+    "useSupabase": "supabase",
+    "comp": "React-components"
+  },
+  "material-icon-theme.hidesExplorerArrows": false
+}
