@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { FieldConfig, FieldMetadata, SchemaMetadata, SchemaPath } from '../types';
+import { FieldConfig, FieldMetadata, SchemaPath } from '../types';
 
 // Schema type detection using the internal type property
 function getSchemaType(schema: z.ZodTypeAny): string {
