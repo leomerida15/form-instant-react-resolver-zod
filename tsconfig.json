@@ -30,9 +30,9 @@
         /* Paths */
         "baseUrl": "./",
         "paths": {
-            "*": ["src/*"]
+            "*": ["old/*"]
         }
     },
 
-    "include": ["src", "types", "zod"]
+    "include": ["old", "types", "zod"]
 }
