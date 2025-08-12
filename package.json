@@ -1,6 +1,6 @@
 {
     "name": "@form-instant/react-resolver-zod",
-    "version": "2.0.0-rc.18",
+    "version": "2.0.0",
     "author": {
         "name": "leomerida15",
         "email": "dimasmerida15@gmail.com",
@@ -25,7 +25,6 @@
         "test": "bun test",
         "test:coverage": "bun test --coverage",
         "test:watch": "bun test --watch",
-        "type-check": "tsc --noEmit",
         "up": "npm publish --access public",
         "up:rc": "npm publish --access public --tag rc",
         "format": "prettier --write .",
