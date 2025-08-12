@@ -3,7 +3,7 @@ import './utils/zodExtensions';
 
 // FormInstant components (legacy compatibility)
 export { FormInstantProvider, useFields } from './components/FormInstantProvider';
-export * from './hooks/useSchema';
+export { useSchema, getInitialValues } from './hooks/useSchema';
 export { FormInstantElement } from './components/FormInstantElement';
 
 // Types and utilities
