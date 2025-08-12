@@ -8,15 +8,7 @@ describe('Debug Schema Parser', () => {
             name: z.string(),
         });
 
-        console.log('Schema:', schema);
-        console.log('Schema._def:', (schema as any)._def);
-        console.log('Schema._def.typeName:', (schema as any)._def?.typeName);
-        console.log('Schema.shape:', (schema as any).shape);
-
         const metadata = parseSchema(schema);
-        console.log('Metadata:', metadata);
-        console.log('Fields:', metadata.fields);
-        console.log('Paths:', metadata.paths);
 
         expect(metadata.fields).toBeDefined();
     });

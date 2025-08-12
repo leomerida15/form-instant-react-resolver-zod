@@ -1,6 +1,6 @@
 {
     "name": "@form-instant/react-resolver-zod",
-    "version": "1.8.4",
+    "version": "2.0.0-rc.14",
     "author": {
         "name": "leomerida15",
         "email": "dimasmerida15@gmail.com",
@@ -27,9 +27,12 @@
         "test:watch": "bun test --watch",
         "type-check": "tsc --noEmit",
         "up": "npm publish --access public",
-        "up:rc": "npm publish --access public --tag rc"
+        "up:rc": "npm publish --access public --tag rc",
+        "format": "prettier --write .",
+        "prepare": "bun run build"
     },
     "devDependencies": {
+        "@eslint/js": "^9.33.0",
         "@size-limit/preset-small-lib": "^11.2.0",
         "@tsconfig/recommended": "^1.0.10",
         "@tsconfig/vite-react": "^3.4.0",
@@ -46,6 +49,7 @@
         "size-limit": "^11.2.0",
         "tslib": "^2.8.1",
         "typescript": "~5.0.4",
+        "typescript-eslint": "^8.39.0",
         "zod": "^4.0.17"
     },
     "peerDependencies": {
