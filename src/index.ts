@@ -8,6 +8,7 @@ export { FormInstantElement } from './components/FormInstantElement';
 
 // Types and utilities
 export * from './types';
+
 export * from './utils/schemaParser';
 
 // Export addFieldConfig for manual use

@@ -1,4 +1,5 @@
 import Bun from 'bun';
+import fs from 'node:fs';
 
 const timetaken = 'complete build';
 
@@ -26,8 +27,17 @@ Bun.build({
         console.log('✅ Main bundle built successfully');
         console.log('📦 Bundle optimized for minimum size');
 
+        // Clean TypeScript build cache to ensure fresh generation
+        const buildInfoPath = './node_modules/.tmp/tsconfig.build.tsbuildinfo';
+        try {
+            fs.unlinkSync(buildInfoPath);
+            console.log('🧹 TypeScript build cache cleaned');
+        } catch (error) {
+            // Cache file doesn't exist, which is fine
+        }
+
         // Generate TypeScript declarations using the specific config
-        return Bun.spawn(['bun', 'x', 'tsc', '--project', 'tsconfig.declaration.json']);
+        return Bun.spawn(['bun', 'x', 'tsc', '--project', 'tsconfig.build.json']);
     })
     .then((result) => {
         // Check if the process completed successfully
