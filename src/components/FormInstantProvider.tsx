@@ -3,6 +3,7 @@
 import { createContext, useContext } from 'react';
 import { zodResolverProps } from '../types';
 import { parseSchema } from '../utils/schemaParser';
+import { NestedKeys } from './FormInstantElement';
 
 export const ZodResolverContext = createContext<zodResolverProps | null>(null);
 
@@ -15,7 +16,7 @@ export const FormInstantProvider: FCC<{
 /**
  * Hook to get a specific field by name from the schema
  */
-export const useFields = <Sc extends Record<string, any>>(key: keyof Sc) => {
+export const useFields = <Sc extends Record<string, any>>(key: NestedKeys<Sc>) => {
     const schema = useContext(ZodResolverContext);
     if (!schema) {
         throw new Error('useFields must be used within FormInstantProvider');

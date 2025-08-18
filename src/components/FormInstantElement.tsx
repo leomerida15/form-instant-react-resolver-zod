@@ -4,8 +4,14 @@ import { Fragment, useId } from 'react';
 import { ElementMapping } from '@form-instant/react-input-mapping';
 import { useFields } from './FormInstantProvider';
 
-export interface ElementProps<Schema extends Record<string, any>> {
-    name: keyof Schema;
+export type NestedKeys<T> = {
+    [K in keyof T]: T[K] extends Record<string, any>
+        ? K | `${K & string}.${keyof T[K] & string}`
+        : K;
+}[keyof T];
+
+export interface ElementProps<S extends Record<string, any>> {
+    name: NestedKeys<S>;
 }
 
 export const FormInstantElement = <S extends Record<string, any>>({ name }: ElementProps<S>) => {
