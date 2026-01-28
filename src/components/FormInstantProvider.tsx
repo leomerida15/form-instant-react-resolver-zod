@@ -1,27 +1,41 @@
-'use client';
-
 import { createContext, useContext } from 'react';
 import { zodResolverProps } from '../types';
 import { parseSchema } from '../utils/schemaParser';
 import { NestedKeys } from './FormInstantElement';
+import { FieldMetadata } from '@form-instant/react-input-mapping';
 
-export const ZodResolverContext = createContext<zodResolverProps | null>(null);
+interface ZodResolverContextType {
+	fields: Record<string, FieldMetadata>;
+	schema: zodResolverProps;
+}
+
+export const ZodResolverContext = createContext<ZodResolverContextType | null>(null);
 
 export const FormInstantProvider: FCC<{
-    schema: zodResolverProps;
+	schema: zodResolverProps;
 }> = ({ children, schema }) => {
-    return <ZodResolverContext.Provider value={schema}>{children}</ZodResolverContext.Provider>;
+	const { fields } = parseSchema(schema);
+
+	return (
+		<ZodResolverContext.Provider value={{ schema, fields }}>
+			{children}
+		</ZodResolverContext.Provider>
+	);
 };
+
+interface useFieldsProps<Sc extends Record<string, any>> {
+	key: NestedKeys<Sc>;
+}
 
 /**
  * Hook to get a specific field by name from the schema
  */
-export const useFields = <Sc extends Record<string, any>>(key: NestedKeys<Sc>) => {
-    const schema = useContext(ZodResolverContext);
-    if (!schema) {
-        throw new Error('useFields must be used within FormInstantProvider');
-    }
+export const useFields = <Sc extends Record<string, any>>({ key }: useFieldsProps<Sc>) => {
+	const { fields } = useContext(ZodResolverContext)!;
 
-    const { fields } = parseSchema(schema);
-    return fields[key as string];
+	if (!fields) {
+		throw new Error('useFields must be used within FormInstantProvider');
+	}
+
+	return fields[key as string]!;
 };

@@ -1,5 +1,6 @@
 import { z } from 'zod';
-import { FieldConfig, FieldMetadata, SchemaPath } from '../types';
+import { FieldConfig, SchemaPath } from '../types';
+import { FieldMetadata } from '@form-instant/react-input-mapping';
 
 // Schema type detection using the internal type property
 function getSchemaType(schema: z.ZodTypeAny): string {
@@ -19,7 +20,7 @@ function extractFieldConfig(schema: z.ZodTypeAny) {
 /**
  * Parses a Zod schema and extracts metadata for mapping
  */
-export function parseSchema(schema: z.ZodTypeAny): { fields: Record<string, any> } {
+export function parseSchema(schema: z.ZodTypeAny): { fields: Record<string, FieldMetadata> } {
     const fields: Record<string, FieldMetadata> = {};
     const paths: SchemaPath[] = [];
     const structure: Record<string, any> = {};
@@ -118,14 +119,16 @@ export function parseSchema(schema: z.ZodTypeAny): { fields: Record<string, any>
             const nestedStructure: Record<string, any> = {};
             parentStructure[fieldName] = nestedStructure;
 
-            Object.keys(nestedShape).forEach((nestedFieldName) => {
+            for (const elementFieldName in nestedShape) {
+                if (!(elementFieldName in nestedShape)) continue;
+
                 processField(
-                    nestedFieldName,
-                    nestedShape[nestedFieldName],
+                    elementFieldName,
+                    nestedShape[elementFieldName],
                     currentPath,
                     nestedStructure,
                 );
-            });
+            }
 
             fields[currentPath].schema = parentStructure[fieldName];
         }
@@ -138,14 +141,20 @@ export function parseSchema(schema: z.ZodTypeAny): { fields: Record<string, any>
                 parentStructure[fieldName] = arrayStructure;
 
                 const elementShape = elementSchema.shape;
-                Object.keys(elementShape).forEach((elementFieldName) => {
+
+                for (const elementFieldName in elementShape) {
+                    if (!(elementFieldName in elementShape)) continue;
+
                     processField(
                         elementFieldName,
                         elementShape[elementFieldName],
                         `${currentPath}[0]`,
                         arrayStructure,
                     );
-                });
+                }
+
+
+                fields[currentPath].schema = [arrayStructure] as any;
             }
         }
     }
